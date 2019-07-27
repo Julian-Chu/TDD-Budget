@@ -89,18 +89,18 @@ namespace BudgetLibTest
             BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 7, 5), 500);
         }
 
-        //[Test]
-        //public void TwoMonth_Budget_300()
-        //{
-        //    _stubBudgetRepo.GetAll()
-        //        .Returns(new List<Budget>
-        //        {
-        //            new Budget {YearMonth = "201907", Amount = 3100},
-        //            new Budget {YearMonth = "201908", Amount = 3100}
-        //    });
+        [Test]
+        public void TwoMonth_Budget_300()
+        {
+            _stubBudgetRepo.GetAll()
+                .Returns(new List<Budget>
+                {
+                    new Budget {YearMonth = "201907", Amount = 3100},
+                    new Budget {YearMonth = "201908", Amount = 3100}
+            });
 
-        //    BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 8, 2), 3300);
-        //}
+            BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 8, 2), 3300);
+        }
 
         private void BudgetShouldBe(DateTime startDate, DateTime endDate, double expected)
         {
