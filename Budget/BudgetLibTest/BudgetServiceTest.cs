@@ -74,6 +74,17 @@ namespace BudgetLibTest
 
             BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 7, 1), 100);
         }
+        [Test]
+        public void DaysInSameMonth_Budget_500()
+        {
+            _stubBudgetRepo.GetAll()
+                .Returns(new List<Budget>
+                {
+                    new Budget {YearMonth = "201907", Amount = 3100}
+                });
+
+            BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 7, 5), 500);
+        }
 
         private void BudgetShouldBe(DateTime startDate, DateTime endDate, double expected)
         {

@@ -28,10 +28,10 @@ namespace BudgetLibTest
                 Amount = x.Amount,
             });
 
-            if (startDate == endDate)
+            if (startDate.Month == endDate.Month && startDate.Year == endDate.Year)
             {
                 //int days = DateTime.DaysInMonth(startDate.Year, startDate.Month);
-                return budgetModels.FirstOrDefault().DailyAmount;
+                return ((endDate - startDate).Days + 1) * budgetModels.FirstOrDefault()?.DailyAmount ?? 0;
             }
 
             return budgets.FirstOrDefault()?.Amount ?? 0;
