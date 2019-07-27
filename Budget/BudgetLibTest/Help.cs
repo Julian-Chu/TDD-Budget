@@ -8,6 +8,11 @@ namespace BudgetLibTest
         public static Dictionary<string, int> GetDaysInMonth(DateTime startDate, DateTime endDate)
         {
             Dictionary<string, int> lookup = new Dictionary<string, int>();
+            if (startDate.Year == endDate.Year && startDate.Month == endDate.Month)
+            {
+                lookup.Add(startDate.ToString("yyyyMM"), (endDate - startDate).Days + 1);
+                return lookup;
+            }
 
             var start = new DateTime(startDate.Year, startDate.Month, 1);
             while (start <= endDate)

@@ -33,10 +33,10 @@ namespace BudgetLibTest
         [Test]
         public void PartialMonth()
         {
-            var daysInMonth = Help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 01, 07));
+            var daysInMonth = Help.GetDaysInMonth(new DateTime(2019, 01, 04), new DateTime(2019, 01, 07));
             var expected = new Dictionary<string, int>()
             {
-                {"201901",7 }
+                {"201901",4 }
             };
             expected.ToExpectedObject().ShouldEqual(daysInMonth);
         }
