@@ -5,12 +5,12 @@ namespace BudgetLibTest
 {
     public class Help
     {
-        public Dictionary<string, int> GetDaysInMonth(DateTime startDate, DateTime endDate)
+        public static Dictionary<string, int> GetDaysInMonth(DateTime startDate, DateTime endDate)
         {
             Dictionary<string, int> lookup = new Dictionary<string, int>();
 
             var start = new DateTime(startDate.Year, startDate.Month, 1);
-            while (start < endDate)
+            while (start <= endDate)
             {
                 var days = DateTime.DaysInMonth(start.Year, start.Month);
                 if (start.Month == startDate.Month && start.Year == startDate.Year)

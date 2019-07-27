@@ -20,7 +20,7 @@ namespace BudgetLibTest
                 return 0;
             }
 
-            //Dictionary<string, int> days = GetDaysInMonth(startDate, endDate);
+            Dictionary<string, int> days = Help.GetDaysInMonth(startDate, endDate);
 
             var budgets = _budgetRepo.GetAll() ?? new List<Budget>();
 
@@ -29,14 +29,15 @@ namespace BudgetLibTest
                 BudgetDate = DateTime.ParseExact(x.YearMonth, "yyyyMM", null),
                 Amount = x.Amount,
             });
-
-            if (startDate.Month == endDate.Month && startDate.Year == endDate.Year)
+            double sum = 0;
+            foreach (var kv in days)
             {
-                //int days = DateTime.DaysInMonth(startDate.Year, startDate.Month);
-                return ((endDate - startDate).Days + 1) * budgetModels.FirstOrDefault()?.DailyAmount ?? 0;
+                var b = budgetModels.FirstOrDefault(x => x.BudgetDate.ToString("yyyyMM") == kv.Key);
+                var dailyAmout = b?.DailyAmount ?? 0;
+                sum += (kv.Value) * (dailyAmout);
             }
 
-            return budgets.FirstOrDefault()?.Amount ?? 0;
+            return sum;
         }
 
         private static bool IsInvalidDateRange(DateTime startDate, DateTime endDate)

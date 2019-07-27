@@ -8,18 +8,10 @@ namespace BudgetLibTest
     [TestFixture]
     public class GetDaysInMonthTest
     {
-        private Help _help;
-
-        [SetUp]
-        public void Setup()
-        {
-            _help = new Help();
-        }
-
         [Test]
         public void WholeMonth()
         {
-            var daysInMonth = _help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 01, 31));
+            var daysInMonth = Help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 01, 31));
             var expected = new Dictionary<string, int>()
             {
                 {"201901",31 }
@@ -28,9 +20,20 @@ namespace BudgetLibTest
         }
 
         [Test]
+        public void SingleDay()
+        {
+            var daysInMonth = Help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 01, 1));
+            var expected = new Dictionary<string, int>()
+            {
+                {"201901",1 }
+            };
+            expected.ToExpectedObject().ShouldEqual(daysInMonth);
+        }
+
+        [Test]
         public void PartialMonth()
         {
-            var daysInMonth = _help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 01, 07));
+            var daysInMonth = Help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 01, 07));
             var expected = new Dictionary<string, int>()
             {
                 {"201901",7 }
@@ -41,7 +44,7 @@ namespace BudgetLibTest
         [Test]
         public void TwoMonth()
         {
-            var daysInMonth = _help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 02, 07));
+            var daysInMonth = Help.GetDaysInMonth(new DateTime(2019, 01, 01), new DateTime(2019, 02, 07));
             var expected = new Dictionary<string, int>()
             {
                 {"201901",31 },
@@ -53,7 +56,7 @@ namespace BudgetLibTest
         [Test]
         public void CrossYear()
         {
-            var daysInMonth = _help.GetDaysInMonth(new DateTime(2018, 11, 15), new DateTime(2019, 02, 07));
+            var daysInMonth = Help.GetDaysInMonth(new DateTime(2018, 11, 15), new DateTime(2019, 02, 07));
             var expected = new Dictionary<string, int>()
             {
                 {"201811",16 },
