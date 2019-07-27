@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="BudgetService.cs" />
     <Compile Include="BudgetServiceTest.cs" />
+    <Compile Include="GetDaysInMonthTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
