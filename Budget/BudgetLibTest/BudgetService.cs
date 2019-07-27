@@ -22,12 +22,38 @@ namespace BudgetLibTest
 
             var budgets = _budgetRepo.GetAll() ?? new List<Budget>();
 
+            var budgetModels = budgets.Select(x => new BudgetTemp()
+            {
+                BudgetDate = DateTime.ParseExact(x.YearMonth, "yyyyMM", null),
+                Amount = x.Amount,
+            });
+
+            if (startDate == endDate)
+            {
+                //int days = DateTime.DaysInMonth(startDate.Year, startDate.Month);
+                return budgetModels.FirstOrDefault().DailyAmount;
+            }
+
             return budgets.FirstOrDefault()?.Amount ?? 0;
         }
 
         private static bool IsInvalidDateRange(DateTime startDate, DateTime endDate)
         {
             return endDate < startDate;
+        }
+    }
+
+    public class BudgetTemp
+    {
+        public DateTime BudgetDate { get; set; }
+        public int Amount { get; set; }
+
+        public double DailyAmount
+        {
+            get
+            {
+                return Amount / DateTime.DaysInMonth(BudgetDate.Year, BudgetDate.Month);
+            }
         }
     }
 }

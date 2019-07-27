@@ -41,6 +41,39 @@ namespace BudgetLibTest
 
             BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 7, 31), 3100);
         }
+        [Test]
+        public void SingleWholeMonth_HasBudget_zero()
+        {
+            _stubBudgetRepo.GetAll()
+                .Returns(new List<Budget>
+                {
+                    new Budget {YearMonth = "201907", Amount = 0}
+                });
+
+            BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 7, 31), 0);
+        }
+        [Test]
+        public void SingleWholeMonth_NoBudget_()
+        {
+            _stubBudgetRepo.GetAll()
+                .Returns(new List<Budget>
+                {
+                    
+                });
+
+            BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 7, 31), 0);
+        }
+        [Test]
+        public void SingleDay_Budget_100()
+        {
+            _stubBudgetRepo.GetAll()
+                .Returns(new List<Budget>
+                {
+                    new Budget {YearMonth = "201907", Amount = 3100}
+                });
+
+            BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 7, 1), 100);
+        }
 
         private void BudgetShouldBe(DateTime startDate, DateTime endDate, double expected)
         {
