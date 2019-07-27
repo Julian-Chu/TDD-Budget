@@ -115,6 +115,19 @@ namespace BudgetLibTest
             BudgetShouldBe(new DateTime(2019, 7, 1), new DateTime(2019, 8, 31), 6200);
         }
 
+        [Test]
+        public void crossYear()
+        {
+            _stubBudgetRepo.GetAll()
+                .Returns(new List<Budget>
+                {
+                    new Budget {YearMonth = "201812", Amount = 310},
+                    new Budget {YearMonth = "201901", Amount = 3100}
+            });
+
+            BudgetShouldBe(new DateTime(2018, 12, 1), new DateTime(2019, 1, 15), 1810);
+        }
+
         private void BudgetShouldBe(DateTime startDate, DateTime endDate, double expected)
         {
             var actual = _budgetService.Query(startDate, endDate);
