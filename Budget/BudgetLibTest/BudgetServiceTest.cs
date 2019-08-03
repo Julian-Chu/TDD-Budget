@@ -144,5 +144,14 @@ namespace BudgetLibTest
     {
         public string YearMonth { get; set; }
         public int Amount { get; set; }
+        public DateTime GetDateTime() => DateTime.ParseExact(YearMonth, "yyyyMM", null);
+
+        public double DailyAmount
+        {
+            get
+            {
+                return Amount / DateTime.DaysInMonth(GetDateTime().Year, GetDateTime().Month);
+            }
+        }
     }
 }

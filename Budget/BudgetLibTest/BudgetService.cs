@@ -24,15 +24,10 @@ namespace BudgetLibTest
 
             var budgets = _budgetRepo.GetAll() ?? new List<Budget>();
 
-            var budgetModels = budgets.Select(x => new BudgetTemp()
-            {
-                BudgetDate = DateTime.ParseExact(x.YearMonth, "yyyyMM", null),
-                Amount = x.Amount,
-            });
             double sum = 0;
             foreach (var kv in days)
             {
-                var b = budgetModels.FirstOrDefault(x => x.BudgetDate.ToString("yyyyMM") == kv.Key);
+                var b = budgets.FirstOrDefault(x => x.YearMonth == kv.Key);
                 var dailyAmout = b?.DailyAmount ?? 0;
                 sum += (kv.Value) * (dailyAmout);
             }
@@ -76,17 +71,4 @@ namespace BudgetLibTest
         }
     }
 
-    public class BudgetTemp
-    {
-        public DateTime BudgetDate { get; set; }
-        public int Amount { get; set; }
-
-        public double DailyAmount
-        {
-            get
-            {
-                return Amount / DateTime.DaysInMonth(BudgetDate.Year, BudgetDate.Month);
-            }
-        }
-    }
 }
