@@ -25,8 +25,12 @@ namespace BudgetLibTest
         }
 
         [Test]
-        public void Valid_DateRange()
+        public void Valid_DateRange_NoBudget()
         {
+            _stubBudgetRepo.GetAll()
+                .Returns(new List<Budget>
+                {
+                });
             BudgetShouldBe(new DateTime(2019, 7, 27), new DateTime(2019, 7, 28), 0);
         }
 
