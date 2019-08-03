@@ -15,24 +15,13 @@ namespace BudgetLibTest
 
         public double Query(DateTime startDate, DateTime endDate)
         {
-            if (IsInvalidDateRange(startDate, endDate))
+            if ( IsInvalidDateRange(startDate, endDate))
             {
                 return 0;
             }
 
             Dictionary<string, int> days = GetDaysInMonth(startDate, endDate);
-
-            var budgets = _budgetRepo.GetAll() ?? new List<Budget>();
-
-            double sum = 0;
-            foreach (var kv in days)
-            {
-                var b = budgets.FirstOrDefault(x => x.YearMonth == kv.Key);
-                var dailyAmout = b?.DailyAmount ?? 0;
-                sum += (kv.Value) * (dailyAmout);
-            }
-
-            return sum;
+            return _budgetRepo.GetAll().Sum(b => b.DailyAmount * days[b.YearMonth]);
         }
 
         private static bool IsInvalidDateRange(DateTime startDate, DateTime endDate)
