@@ -24,12 +24,12 @@ namespace BudgetLibTest
             return _budgetRepo.GetAll().Sum(b => b.DailyAmount * days[b.YearMonth]);
         }
 
-        private static bool IsInvalidDateRange(DateTime startDate, DateTime endDate)
+        private  bool IsInvalidDateRange(DateTime startDate, DateTime endDate)
         {
             return endDate < startDate;
         }
 
-        public Dictionary<string, int> GetDaysInMonth(DateTime startDate, DateTime endDate)
+        private Dictionary<string, int> GetDaysInMonth(DateTime startDate, DateTime endDate)
         {
             Dictionary<string, int> lookup = new Dictionary<string, int>();
 
