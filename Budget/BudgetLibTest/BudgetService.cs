@@ -40,35 +40,24 @@ namespace BudgetLibTest
             return endDate < startDate;
         }
 
-        public  Dictionary<string, int> GetDaysInMonth(DateTime startDate, DateTime endDate)
+        public Dictionary<string, int> GetDaysInMonth(DateTime startDate, DateTime endDate)
         {
             Dictionary<string, int> lookup = new Dictionary<string, int>();
-            if (startDate.Year == endDate.Year && startDate.Month == endDate.Month)
+
+            var currentMonthFirstDay = new DateTime(startDate.Year, startDate.Month, 1);
+            while (currentMonthFirstDay <= endDate)
             {
-                lookup.Add(startDate.ToString("yyyyMM"), (endDate - startDate).Days + 1);
-                return lookup;
-            }
+                var currentMonthLastDay = currentMonthFirstDay.AddMonths(1).AddDays(-1);
+                var start = startDate > currentMonthFirstDay ? startDate : currentMonthFirstDay;
+                var end = endDate < currentMonthLastDay ? endDate : currentMonthLastDay;
+                var days = (end - start).Days + 1;
 
-            var start = new DateTime(startDate.Year, startDate.Month, 1);
-            while (start <= endDate)
-            {
-                var days = DateTime.DaysInMonth(start.Year, start.Month);
-                if (start.Month == startDate.Month && start.Year == startDate.Year)
-                {
-                    days = days - startDate.Day + 1;
-                }
-                if (start.Month == endDate.Month && start.Year == endDate.Year)
-                {
-                    days = endDate.Day;
-                }
+                lookup[currentMonthFirstDay.ToString("yyyyMM")] = days;
 
-                lookup[start.ToString("yyyyMM")] = days;
-
-                start = start.AddMonths(1);
+                currentMonthFirstDay = currentMonthFirstDay.AddMonths(1);
             }
 
             return lookup;
         }
     }
-
 }
